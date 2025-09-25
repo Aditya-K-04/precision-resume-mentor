@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 
+// Load env vars
 dotenv.config();
 
 const app = express();
@@ -11,10 +12,15 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Example route
-app.get("/", (req, res) => {
-  res.send("Backend is running 🚀");
-});
+app.get("/",function(req,res){
+  res.send("Go to /api/test");
+})
+
+// Routes
+import testRoutes from "./routes/testRoutes.js";
+app.use("/api/test", testRoutes);
+import resumeRoutes from "./routes/resumeRoutes.js";
+app.use("/api/resumes", resumeRoutes);
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
