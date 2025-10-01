@@ -1,10 +1,10 @@
-import express from "express";
 import dotenv from "dotenv";
+dotenv.config();
+import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
+import aiRoutes from "./routes/aiRoutes.js";
 
-// Load env vars
-dotenv.config();
 
 const app = express();
 
@@ -21,6 +21,12 @@ import testRoutes from "./routes/testRoutes.js";
 app.use("/api/test", testRoutes);
 import resumeRoutes from "./routes/resumeRoutes.js";
 app.use("/api/resumes", resumeRoutes);
+
+app.use("/api/ai", aiRoutes);
+
+console.log("🔑 AI Key:", process.env.GEMINI_API_KEY ? "Loaded ✅" : "Not Found ❌");
+
+
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
