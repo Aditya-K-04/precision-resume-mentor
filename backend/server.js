@@ -11,7 +11,10 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'https://precision-resume-mentor-6py3.vercel.app', // replace with actual deployed frontend URL
+  credentials: true,
+}));
 
 
 app.get("/", (req, res) => {
