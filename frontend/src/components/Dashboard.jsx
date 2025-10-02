@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { resumeService, testConnection } from '../services/api';
 
-const Dashboard = () => {
+const Dashboard = ({ refreshTrigger }) => {
   const [resumes, setResumes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [apiStatus, setApiStatus] = useState('checking');
@@ -9,6 +9,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const checkApiAndLoadData = async () => {
+      setLoading(true);
       try {
         // Test API connection
         await testConnection();
@@ -27,7 +28,9 @@ const Dashboard = () => {
     };
 
     checkApiAndLoadData();
-  }, []);
+
+  // Re-run effect when refreshTrigger changes (eg. new resume uploaded)
+  }, [refreshTrigger]);
 
   if (loading) {
     return (

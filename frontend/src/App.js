@@ -5,14 +5,18 @@ import ResumeParser from './components/ResumeParser';
 import SkillGapAnalysis from './components/SkillGapAnalysis';
 import ChannelSuggestions from './components/ChannelSuggestions';
 
-
 function App() {
   const [currentView, setCurrentView] = useState('dashboard');
   const [resumeData, setResumeData] = useState(null);
 
+  // Add state that forces dashboard refresh on new upload
+  const [dashboardRefreshTrigger, setDashboardRefreshTrigger] = useState(false);
+
   const handleResumeUpload = (data) => {
     setResumeData(data);
     setCurrentView('skillgap');
+    // Trigger dashboard refresh to reload resumes
+    setDashboardRefreshTrigger(prev => !prev);
   };
 
   return (
@@ -49,7 +53,7 @@ function App() {
       </header>
 
       <main className="App-main">
-        {currentView === 'dashboard' && <Dashboard />}
+        {currentView === 'dashboard' && <Dashboard refreshTrigger={dashboardRefreshTrigger} />}
         {currentView === 'parser' && <ResumeParser onResumeUpload={handleResumeUpload} />}
         {currentView === 'skillgap' && <SkillGapAnalysis resumeData={resumeData} />}
         {currentView === 'videos' && <ChannelSuggestions />}
