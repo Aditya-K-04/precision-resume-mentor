@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-// Example in your ../services/api.js or wherever you set base URL
+// Base URL from environment variable or fallback to localhost
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -16,7 +15,7 @@ export const resumeService = {
   // Parse resume text
   parseResume: async (text) => {
     try {
-      const response = await api.post('/ai/parse', { text });
+      const response = await api.post('/api/ai/parse', { text });
       return response.data;
     } catch (error) {
       console.error('Error parsing resume:', error.response?.data || error.message);
@@ -27,7 +26,7 @@ export const resumeService = {
   // Get all resumes
   getAllResumes: async () => {
     try {
-      const response = await api.get('/resumes');
+      const response = await api.get('/api/resumes');
       return response.data;
     } catch (error) {
       console.error('Error fetching resumes:', error.response?.data || error.message);
@@ -38,7 +37,7 @@ export const resumeService = {
   // Save parsed resume to database
   saveResume: async (resumeData) => {
     try {
-      const response = await api.post('/resumes/parse', { text: resumeData.text });
+      const response = await api.post('/api/resumes/parse', { text: resumeData.text });
       return response.data;
     } catch (error) {
       console.error('Error saving resume:', error.response?.data || error.message);
@@ -52,7 +51,7 @@ export const aiService = {
   // Skill gap analysis
   getSkillGapAnalysis: async (currentSkills, targetJob) => {
     try {
-      const response = await api.post('/ai/skillgap', {
+      const response = await api.post('/api/ai/skillgap', {
         currentSkills,
         targetJob
       });
@@ -67,7 +66,7 @@ export const aiService = {
 // Test API connection
 export const testConnection = async () => {
   try {
-    const response = await api.get('/test');
+    const response = await api.get('/api/test');
     return response.data;
   } catch (error) {
     console.error('API connection test failed:', error);
