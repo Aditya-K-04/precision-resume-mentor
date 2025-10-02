@@ -8,15 +8,13 @@ import ChannelSuggestions from './components/ChannelSuggestions';
 function App() {
   const [currentView, setCurrentView] = useState('dashboard');
   const [resumeData, setResumeData] = useState(null);
-
-  // Add state that forces dashboard refresh on new upload
-  const [dashboardRefreshTrigger, setDashboardRefreshTrigger] = useState(false);
+  const [dashboardRefreshTrigger, setDashboardRefreshTrigger] = useState(0);
 
   const handleResumeUpload = (data) => {
     setResumeData(data);
     setCurrentView('skillgap');
-    // Trigger dashboard refresh to reload resumes
-    setDashboardRefreshTrigger(prev => !prev);
+    // Trigger dashboard refresh
+    setDashboardRefreshTrigger(prev => prev + 1);
   };
 
   return (

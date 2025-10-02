@@ -38,12 +38,15 @@ University of Technology, 2021`;
     setError(null);
     
     try {
-      const result = await resumeService.parseResume(resumeText);
-      setParsedData(result);
+      // Parse resume and automatically save to MongoDB
+      const savedResume = await resumeService.parseResume(resumeText);
+      setParsedData(savedResume);
       
-      // Notify parent component
+      console.log('✅ Resume parsed and saved:', savedResume._id);
+      
+      // Notify parent component for dashboard refresh
       if (onResumeUpload) {
-        onResumeUpload(result);
+        onResumeUpload(savedResume);
       }
     } catch (error) {
       setError(error.message || 'Failed to parse resume');
@@ -96,7 +99,7 @@ University of Technology, 2021`;
             disabled={loading || !resumeText.trim()}
             className="parse-btn"
           >
-            {loading ? '🔄 Parsing...' : '🚀 Parse Resume'}
+            {loading ? '🔄 Parsing & Saving...' : '🚀 Parse Resume'}
           </button>
         </div>
       </div>
@@ -110,13 +113,14 @@ University of Technology, 2021`;
       {loading && (
         <div className="loading-state">
           <div className="spinner"></div>
-          <p>AI is analyzing your resume...</p>
+          <p>AI is analyzing and saving your resume...</p>
         </div>
       )}
 
       {parsedData && (
         <div className="parsed-results">
-          <h3>✅ Parsed Results</h3>
+          <h3>✅ Resume Parsed & Saved to Database</h3>
+          <p className="success-message">Resume ID: {parsedData._id}</p>
           
           <div className="result-grid">
             <div className="result-section">

@@ -18,6 +18,7 @@ const Dashboard = ({ refreshTrigger }) => {
         // Load resumes
         const resumeData = await resumeService.getAllResumes();
         setResumes(resumeData);
+        console.log('📊 Dashboard loaded with', resumeData.length, 'resumes');
       } catch (error) {
         setApiStatus('disconnected');
         setError('Failed to connect to backend API');
@@ -28,9 +29,7 @@ const Dashboard = ({ refreshTrigger }) => {
     };
 
     checkApiAndLoadData();
-
-  // Re-run effect when refreshTrigger changes (eg. new resume uploaded)
-  }, [refreshTrigger]);
+  }, [refreshTrigger]); // Refresh when trigger changes
 
   if (loading) {
     return (

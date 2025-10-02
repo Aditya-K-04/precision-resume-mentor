@@ -12,10 +12,10 @@ const api = axios.create({
 
 // Resume Services
 export const resumeService = {
-  // Parse resume text
+  // Parse resume text (automatically saves to DB)
   parseResume: async (text) => {
     try {
-      const response = await api.post('/api/ai/parse', { text });
+      const response = await api.post('/api/resumes/parse', { text });
       return response.data;
     } catch (error) {
       console.error('Error parsing resume:', error.response?.data || error.message);
@@ -31,17 +31,6 @@ export const resumeService = {
     } catch (error) {
       console.error('Error fetching resumes:', error.response?.data || error.message);
       throw error.response?.data || { message: 'Failed to fetch resumes' };
-    }
-  },
-
-  // Save parsed resume to database
-  saveResume: async (resumeData) => {
-    try {
-      const response = await api.post('/api/resumes/parse', { text: resumeData.text });
-      return response.data;
-    } catch (error) {
-      console.error('Error saving resume:', error.response?.data || error.message);
-      throw error.response?.data || { message: 'Failed to save resume' };
     }
   }
 };
