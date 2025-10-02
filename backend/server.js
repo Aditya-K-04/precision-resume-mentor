@@ -11,10 +11,8 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors({
-  origin: 'https://[your-vercel-domain].vercel.app',
-  credentials: true
-}));
+app.use(cors());
+
 
 app.get("/", (req, res) => {
   res.send("Go to /api/test");
