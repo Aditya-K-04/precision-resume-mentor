@@ -52,7 +52,7 @@ const Dashboard = () => {
       {error && (
         <div className="error-banner">
           <p>⚠️ {error}</p>
-          <small>Make sure your backend server is running on http://localhost:5000</small>
+          <small>Make sure your backend server is running on {process.env.REACT_APP_API_URL || 'http://localhost:5000'}</small>
         </div>
       )}
 
